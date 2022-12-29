@@ -23,7 +23,9 @@ class ViewController: UIViewController {
     @IBOutlet var blueValueLabel: UILabel!
     
     
-    @IBOutlet var changeColorView: UIView!
+    @IBOutlet var redColorView: UIView!
+    @IBOutlet var greenColorView: UIView!
+    @IBOutlet var blueColorView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +34,8 @@ class ViewController: UIViewController {
         setupBlueSlider()
         setupTextColorLabels()
         
-        changeColorView.layer.cornerRadius = 10
+        redColorView.layer.cornerRadius = 10
+        redColorView.backgroundColor = .white
         setupValueLabels()
     }
 
@@ -40,19 +43,21 @@ class ViewController: UIViewController {
     
     @IBAction func redSliderAction() {
         redValueLabel.text = "\(redSlider.value)"
-        changeColorView.backgroundColor = .red
+        redColorView.backgroundColor = .red
+        redColorView.backgroundColor = redColorView.backgroundColor?.withAlphaComponent(CGFloat(redSlider.value))
         
-
     }
     
     @IBAction func greenSliderAction() {
         greenValueLabel.text = "\(greenSlider.value)"
-        changeColorView.backgroundColor = .green
+        greenColorView.backgroundColor = .green
+        greenColorView.backgroundColor = greenColorView.backgroundColor?.withAlphaComponent(CGFloat(greenSlider.value))
         
     }
     @IBAction func blueSliderAction() {
         blueValueLabel.text = "\(blueSlider.value)"
-        changeColorView.backgroundColor = .blue
+        blueColorView.backgroundColor = .blue
+        blueColorView.backgroundColor = blueColorView.backgroundColor?.withAlphaComponent(CGFloat(blueSlider.value))
     }
     
     // MARK: Setup
@@ -64,28 +69,25 @@ class ViewController: UIViewController {
     }
     private func setupTextColorLabels() {
         redTextLabel.text = "Red:"
-        
         greenTextLabel.text = "Green:"
-        greenTextLabel.
         blueTextLabel.text = "Blue:"
-        
     }
     private func setupRedSlider() {
-        redSlider.value = 1
+        redSlider.value = 0
         redSlider.minimumValue = 0
         redSlider.maximumValue = 1
         redSlider.thumbTintColor = .red
         redSlider.minimumTrackTintColor = .red
     }
     private func setupGreenSlider() {
-        greenSlider.value = 1
+        greenSlider.value = 0
         greenSlider.minimumValue = 0
         greenSlider.maximumValue = 1
         greenSlider.thumbTintColor = .green
         greenSlider.minimumTrackTintColor = .green
     }
     private func setupBlueSlider() {
-        blueSlider.value = 1
+        blueSlider.value = 0
         blueSlider.minimumValue = 0
         blueSlider.maximumValue = 1
         blueSlider.thumbTintColor = .blue
