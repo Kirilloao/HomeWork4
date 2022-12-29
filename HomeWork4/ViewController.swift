@@ -32,25 +32,41 @@ class ViewController: UIViewController {
         setupBlueSlider()
         setupTextColorLabels()
         
+        changeColorView.layer.cornerRadius = 10
+        setupValueLabels()
     }
 
    // MARK: IBAction
     
     @IBAction func redSliderAction() {
         redValueLabel.text = "\(redSlider.value)"
+        changeColorView.backgroundColor = .red
+        
+
     }
     
     @IBAction func greenSliderAction() {
         greenValueLabel.text = "\(greenSlider.value)"
+        changeColorView.backgroundColor = .green
+        
     }
     @IBAction func blueSliderAction() {
         blueValueLabel.text = "\(blueSlider.value)"
+        changeColorView.backgroundColor = .blue
     }
     
     // MARK: Setup
+    
+    private func setupValueLabels() {
+        redValueLabel.text = String(redSlider.value)
+        greenValueLabel.text = String(greenSlider.value)
+        blueValueLabel.text = String(blueSlider.value)
+    }
     private func setupTextColorLabels() {
         redTextLabel.text = "Red:"
+        
         greenTextLabel.text = "Green:"
+        greenTextLabel.
         blueTextLabel.text = "Blue:"
         
     }
