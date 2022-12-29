@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     }
 
    // MARK: IBAction
-    //round(number * 100) / 100
+    
     @IBAction func redSliderAction() {
         redValueLabel.text = "\(round(redSlider.value * 100) / 100)"
         redColorView.backgroundColor = .red
