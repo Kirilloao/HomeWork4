@@ -32,62 +32,74 @@ class ViewController: UIViewController {
         setupRedSlider()
         setupGreenSlider()
         setupBlueSlider()
+        
         setupTextColorLabels()
+        setupValueLabels()
         
         redColorView.layer.cornerRadius = 10
-        redColorView.backgroundColor = .white
-        setupValueLabels()
+        greenColorView.layer.cornerRadius = 10
+        blueColorView.layer.cornerRadius = 10
     }
 
    // MARK: IBAction
-    
+    //round(number * 100) / 100
     @IBAction func redSliderAction() {
-        redValueLabel.text = "\(redSlider.value)"
+        redValueLabel.text = "\(round(redSlider.value * 100) / 100)"
         redColorView.backgroundColor = .red
         redColorView.backgroundColor = redColorView.backgroundColor?.withAlphaComponent(CGFloat(redSlider.value))
         
     }
     
     @IBAction func greenSliderAction() {
-        greenValueLabel.text = "\(greenSlider.value)"
+        greenValueLabel.text = "\(round(greenSlider.value * 100) / 100)"
         greenColorView.backgroundColor = .green
         greenColorView.backgroundColor = greenColorView.backgroundColor?.withAlphaComponent(CGFloat(greenSlider.value))
         
     }
     @IBAction func blueSliderAction() {
-        blueValueLabel.text = "\(blueSlider.value)"
+        blueValueLabel.text = "\(round(blueSlider.value * 100) / 100)"
         blueColorView.backgroundColor = .blue
         blueColorView.backgroundColor = blueColorView.backgroundColor?.withAlphaComponent(CGFloat(blueSlider.value))
     }
     
-    // MARK: Setup
+    // MARK: SetupLabels
     
     private func setupValueLabels() {
         redValueLabel.text = String(redSlider.value)
+        redValueLabel.font = UIFont.systemFont(ofSize: 15)
+        redValueLabel.numberOfLines = 2
         greenValueLabel.text = String(greenSlider.value)
+        greenValueLabel.font = UIFont.systemFont(ofSize: 15)
         blueValueLabel.text = String(blueSlider.value)
+        blueValueLabel.font = UIFont.systemFont(ofSize: 15)
     }
     private func setupTextColorLabels() {
         redTextLabel.text = "Red:"
+        redTextLabel.font = UIFont.systemFont(ofSize: 15)
         greenTextLabel.text = "Green:"
+        greenTextLabel.font = UIFont.systemFont(ofSize: 15)
         blueTextLabel.text = "Blue:"
+        blueTextLabel.font = UIFont.systemFont(ofSize: 15)
     }
+    
+    // MARK: SetupSliders
+    
     private func setupRedSlider() {
-        redSlider.value = 0
+        redSlider.value = 0.3
         redSlider.minimumValue = 0
         redSlider.maximumValue = 1
         redSlider.thumbTintColor = .red
         redSlider.minimumTrackTintColor = .red
     }
     private func setupGreenSlider() {
-        greenSlider.value = 0
+        greenSlider.value = 0.7
         greenSlider.minimumValue = 0
         greenSlider.maximumValue = 1
         greenSlider.thumbTintColor = .green
         greenSlider.minimumTrackTintColor = .green
     }
     private func setupBlueSlider() {
-        blueSlider.value = 0
+        blueSlider.value = 0.5
         blueSlider.minimumValue = 0
         blueSlider.maximumValue = 1
         blueSlider.thumbTintColor = .blue
