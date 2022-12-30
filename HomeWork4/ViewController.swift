@@ -8,65 +8,70 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet var colorView: UIView!
+    
+    @IBOutlet var redLabel: UILabel!
+    @IBOutlet var greenLabel: UILabel!
+    @IBOutlet var blueLabel: UILabel!
+    
     @IBOutlet var redSlider: UISlider!
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
-    
-    @IBOutlet var redValueLabel: UILabel!
-    @IBOutlet var greenValueLabel: UILabel!
-    @IBOutlet var blueValueLabel: UILabel!
-    
-    @IBOutlet var colorView: UIView!
-   
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupValueLabels()
-        colorView.layer.cornerRadius = 10
+        
+        colorView.layer.cornerRadius = 15
+        setColor()
+        setValue(for: redLabel, greenLabel, blueLabel)
         
         setupSliders(redSlider, colorForThumb: .red, colorForTrack: .red)
         setupSliders(greenSlider, colorForThumb: .green, colorForTrack: .green)
         setupSliders(blueSlider, colorForThumb: .blue, colorForTrack: .blue)
     }
 
-   // MARK: IBAction
-    
-    @IBAction func redSliderAction() {
-        redValueLabel.text = "\(round(redSlider.value * 100) / 100)"
-        colorView.backgroundColor = UIColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 0.5)
+    @IBAction func rgbSliderAction(_ sender: UISlider) {
+        setColor()
+        switch sender {
+        case redSlider:
+            redLabel.text = string(from: redSlider)
+        case greenSlider:
+            greenLabel.text = string(from: greenSlider)
+        default:
+            blueLabel.text = string(from: blueSlider)
+        }
     }
-    
-    @IBAction func greenSliderAction() {
-        greenValueLabel.text = "\(round(greenSlider.value * 100) / 100)"
-        colorView.backgroundColor = UIColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 0.5)
-    }
-    
-    @IBAction func blueSliderAction() {
-        blueValueLabel.text = "\(round(blueSlider.value * 100) / 100)"
-        colorView.backgroundColor = UIColor(red: CGFloat(redSlider.value), green: CGFloat(greenSlider.value), blue: CGFloat(blueSlider.value), alpha: 0.5)
-    }
-    
-    // MARK: SetupLabels
-    
-    private func setupValueLabels() {
-        redValueLabel.text = String(redSlider.value)
-        redValueLabel.font = UIFont.systemFont(ofSize: 15)
-        
-        greenValueLabel.text = String(greenSlider.value)
-        greenValueLabel.font = UIFont.systemFont(ofSize: 15)
-        
-        blueValueLabel.text = String(blueSlider.value)
-        blueValueLabel.font = UIFont.systemFont(ofSize: 15)
-    }
-   
-    
-    // MARK: SetupSliders
-    
+
     private func setupSliders(_ slider: UISlider, colorForThumb: UIColor, colorForTrack: UIColor) {
         slider.value = 0.5
         slider.thumbTintColor = colorForThumb
         slider.minimumTrackTintColor = colorForTrack
+    }
+    
+    private func setColor() {
+        colorView.backgroundColor = UIColor(
+            red: CGFloat(redSlider.value),
+            green: CGFloat(greenSlider.value),
+            blue: CGFloat(blueSlider.value),
+            alpha: 1
+        )
+    }
+    
+    private func setValue(for labels: UILabel...) {
+        labels.forEach { label in
+            switch label {
+            case redLabel:
+                redLabel.text = string(from: redSlider)
+            case greenLabel:
+                greenLabel.text = string(from: greenSlider)
+            default:
+                blueLabel.text = string(from: blueSlider)
+            }
+        }
+    }
+    private func string(from slider: UISlider) -> String {
+        String(format: "%.2f", slider.value)
     }
 }
 
