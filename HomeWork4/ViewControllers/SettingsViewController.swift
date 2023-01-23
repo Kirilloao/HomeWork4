@@ -19,7 +19,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
-    var myColor: UIColor!
+    var settingsVCViewColor: UIColor!
+    var delegate: SettingsViewControllerDelegate!
 
     
     override func viewDidLoad() {
@@ -28,7 +29,8 @@ class SettingsViewController: UIViewController {
         colorView.layer.cornerRadius = 15
         
         setColor()
-        colorView.backgroundColor = myColor
+        
+        colorView.backgroundColor = settingsVCViewColor
         
         setValue(for: redLabel, greenLabel, blueLabel)
         
@@ -37,14 +39,9 @@ class SettingsViewController: UIViewController {
         setupSliders(blueSlider, colorForThumb: .blue, colorForTrack: .blue)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let startVC = segue.destination as? StartViewController else { return }
-        startVC.newColor = UIColor(
-            red: CGFloat(redSlider.value),
-            green: CGFloat(greenSlider.value),
-            blue: CGFloat(blueSlider.value),
-            alpha: 1
-        )
+    @IBAction func doneButtonDidTapped() {
+        delegate.getColor(colorView.backgroundColor ?? UIColor.red)
+        dismiss(animated: true)
     }
     
     @IBAction func rgbSliderAction(_ sender: UISlider) {
@@ -86,6 +83,7 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    
     private func string(from slider: UISlider) -> String {
         String(format: "%.2f", slider.value)
     }

@@ -7,27 +7,31 @@
 
 import UIKit
 
+protocol SettingsViewControllerDelegate {
+    func getColor(_ color: UIColor)
+}
 
 class StartViewController: UIViewController {
     
-    var newColor: UIColor!
+    var starVCViewColor: UIColor!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let settingsVC = segue.destination as? SettingsViewController else { return }
-        settingsVC.myColor = view.backgroundColor
-
+        settingsVC.settingsVCViewColor = view.backgroundColor
+        settingsVC.delegate = self
+        
     }
-    
     
     @IBAction func goButtonPressed() {
         performSegue(withIdentifier: "goToSettingsVC", sender: nil)
     }
-    
-    @IBAction func unwind(_ seg: UIStoryboardSegue) {
-        view.backgroundColor = newColor
-    }
 }
 
+extension StartViewController: SettingsViewControllerDelegate {
+    func getColor(_ color: UIColor) {
+        view.backgroundColor = color
+    }
+}
 
     
 
