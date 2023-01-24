@@ -19,7 +19,6 @@ class StartViewController: UIViewController {
         guard let settingsVC = segue.destination as? SettingsViewController else { return }
         settingsVC.settingsVCViewColor = view.backgroundColor
         settingsVC.delegate = self
-        
     }
     
     @IBAction func goButtonPressed() {

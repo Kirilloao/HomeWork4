@@ -19,6 +19,11 @@ class SettingsViewController: UIViewController {
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
+    
+    @IBOutlet var redTF: UITextField!
+    @IBOutlet var greenTF: UITextField!
+    @IBOutlet var blueTF: UITextField!
+    
     var settingsVCViewColor: UIColor!
     var delegate: SettingsViewControllerDelegate!
 
@@ -37,6 +42,14 @@ class SettingsViewController: UIViewController {
         setupSliders(redSlider, colorForThumb: .red, colorForTrack: .red)
         setupSliders(greenSlider, colorForThumb: .green, colorForTrack: .green)
         setupSliders(blueSlider, colorForThumb: .blue, colorForTrack: .blue)
+        
+        redTF.delegate = self
+        greenTF.delegate = self
+        blueTF.delegate = self
+        
+        redTF.keyboardType = .numberPad
+        greenTF.keyboardType = .numberPad
+        blueTF.keyboardType = .numberPad
     }
     
     @IBAction func doneButtonDidTapped() {
@@ -49,11 +62,21 @@ class SettingsViewController: UIViewController {
         switch sender {
         case redSlider:
             redLabel.text = string(from: redSlider)
+            redTF.text = string(from: redSlider)
         case greenSlider:
             greenLabel.text = string(from: greenSlider)
+            greenTF.text = string(from: greenSlider)
         default:
             blueLabel.text = string(from: blueSlider)
+            blueTF.text = string(from: blueSlider)
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        redTF.endEditing(true)
+        greenTF.endEditing(true)
+        blueTF.endEditing(true)
     }
    
     private func setupSliders(_ slider: UISlider, colorForThumb: UIColor, colorForTrack: UIColor) {
@@ -76,10 +99,13 @@ class SettingsViewController: UIViewController {
             switch label {
             case redLabel:
                 redLabel.text = string(from: redSlider)
+                redTF.text = string(from: redSlider)
             case greenLabel:
                 greenLabel.text = string(from: greenSlider)
+                greenTF.text = string(from: greenSlider)
             default:
                 blueLabel.text = string(from: blueSlider)
+                blueTF.text = string(from: blueSlider)
             }
         }
     }
@@ -89,4 +115,22 @@ class SettingsViewController: UIViewController {
     }
 }
 
+extension SettingsViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //        guard let text = textField.text else { return }
+        if textField == redTF {
+            redTF.text = textField.text
+            redLabel.text = textField.text
+            redSlider.value = Float(textField.text ?? "") ?? 0
+        } else if textField == greenTF {
+            greenTF.text = textField.text
+            greenLabel.text = textField.text
+            greenSlider.value = Float(textField.text ?? "") ?? 0
+        } else {
+            blueTF.text = textField.text
+            blueLabel.text = textField.text
+            blueSlider.value = Float(textField.text ?? "") ?? 0
+        }
+    }
+}
 
