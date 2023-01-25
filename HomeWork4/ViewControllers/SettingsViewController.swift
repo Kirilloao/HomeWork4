@@ -50,6 +50,8 @@ class SettingsViewController: UIViewController {
         redTF.keyboardType = .numberPad
         greenTF.keyboardType = .numberPad
         blueTF.keyboardType = .numberPad
+        
+        changeSlider()
     }
     
     @IBAction func doneButtonDidTapped() {
@@ -113,24 +115,32 @@ class SettingsViewController: UIViewController {
     private func string(from slider: UISlider) -> String {
         String(format: "%.2f", slider.value)
     }
+    
+    private func changeSlider() {
+        let ciColor = CIColor(color: colorView.backgroundColor ?? .white)
+
+        redSlider.value = Float(ciColor.red)
+        greenSlider.value = Float(ciColor.green)
+        blueSlider.value = Float(ciColor.blue)
+    }
 }
 
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //        guard let text = textField.text else { return }
         if textField == redTF {
-            redTF.text = textField.text
+            
             redLabel.text = textField.text
             redSlider.value = Float(textField.text ?? "") ?? 0
         } else if textField == greenTF {
-            greenTF.text = textField.text
+           
             greenLabel.text = textField.text
             greenSlider.value = Float(textField.text ?? "") ?? 0
         } else {
-            blueTF.text = textField.text
+          
             blueLabel.text = textField.text
             blueSlider.value = Float(textField.text ?? "") ?? 0
         }
+        setColor()
     }
 }
 
